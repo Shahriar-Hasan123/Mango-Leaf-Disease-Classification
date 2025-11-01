@@ -1,0 +1,84 @@
+\chapter{System Interface and Availability}
+
+This chapter details the design, development, and deployment of the practical outcome of this research: the ``PlantDoc Advisor'' mobile application. While the core research focused on a comparative analysis of supervised and semi-supervised learning for mango leaf disease classification, the developed custom Convolutional Neural Network (CNN) models were integrated into a user-friendly, cross-platform mobile system. This application extends the utility of the research by providing an accessible tool for farmers and gardeners to diagnose diseases not only in mango leaves but also in other critical crops like tomato, rice, and potato. The chapter describes the system architecture, the Flutter-based user interface, key functionalities including user authentication and AI-driven diagnosis, and the advisory feature that offers actionable solutions.
+
+\section{System Architecture and Technology Stack}
+The application is architected around a \textbf{client-centric model} to ensure robustness, low-latency inference, and functionality in areas with limited or no internet connectivity. The core disease classification is performed entirely on the user's device, while cloud services are strategically used for user management and dynamic content delivery.
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Client-Side (Frontend \& On-Device AI):} The entire user interface is built using \textbf{Flutter}, chosen for its ability to create high-performance, native applications for both iOS and Android from a single codebase. Crucially, the custom-trained CNN models for all 38 disease classes were converted and optimized into \textbf{TensorFlow Lite (TFLite)} format. These \texttt{.tflite} model files, along with their corresponding label files, are bundled directly within the application's assets. This integration allows for instantaneous disease classification completely on-device, without any dependency on a network connection during inference.
+    
+    \item \textbf{Backend Services (Cloud):}
+    \begin{itemize}
+        \item \textbf{Authentication:} \textbf{Google Firebase Authentication} is integrated to handle secure user login and registration. This provides a personalized experience and a secure foundation for potential future features like saving diagnosis history.
+        \item \textbf{Cloud Database:} \textbf{Firebase Firestore} serves as the cloud database. Its primary role is to store and serve the extensive, structured advisory content for each of the 38 disease classes. When a user requests advice, the app fetches the latest treatment recommendations from Firestore in real-time, ensuring that the guidance can be updated without requiring a new app release.
+    \end{itemize}
+\end{itemize}
+
+The system workflow, illustrated in the architecture diagram below (Figure~\ref{fig:system_arch}), is as follows: The user interacts with the Flutter app. For disease classification, the image is processed locally by the TFLite model, ensuring privacy and speed. For the ``Get Advice'' feature, the app communicates with Firebase services to retrieve the relevant information based on the local model's prediction.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1.0\textwidth]{app/d2.pdf}
+    \caption{System Architecture Diagram showing Flutter app with embedded TFLite model for on-device inference, and its connection to Firebase for authentication and advice retrieval.}
+    \label{fig:system_arch}
+\end{figure}
+
+\section{User Interface Design and Workflow}
+The UI was designed with a focus on simplicity, intuitiveness, and accessibility for users in agricultural settings. The workflow is linear and guided, ensuring a seamless user experience from start to finish.
+
+\subsection{Authentication and Onboarding}
+Upon launching the application, the user is presented with a clean login screen. New users can navigate to a registration screen to create an account using their email and a password. This process, managed by Firebase, ensures that user sessions are secure and personalized.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{app/login_reg.pdf}
+    \caption{User login and registration UI}
+    \label{fig:login_registration}
+\end{figure}
+
+\subsection{Plant Selection Dashboard}
+After successful login, the user arrives at the home screen, which serves as a plant selection dashboard. This screen displays a scrollable list or grid of supported plants—Mango, Tomato, Rice, and Potato. This design allows for easy scalability to add more plants in the future.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.2\textwidth]{app/home.pdf}
+    \caption{UI of Homepage}
+    \label{fig:homepage}
+\end{figure}
+
+\subsection{Image Capture, Selection, and On-Device Inference}
+Tapping on a specific plant (e.g., ``Mango'') navigates the user to a dedicated classification screen. This screen features a prominent button that triggers a bottom sheet or dialog box, giving the user two options: \textbf{``Choose from Gallery''} or \textbf{``Capture from Camera''}. Once an image is selected or captured, it is displayed on the screen. The user then taps a ``Classify'' or ``Analyze'' button to initiate the diagnosis.
+
+\textbf{Key Differentiator:} Upon tapping ``Classify'', the image is preprocessed and fed directly into the \textbf{on-device TFLite model}. The application displays a loading indicator while the local model processes the image. This happens instantly without any data being transmitted to a server. The result, including the \textbf{predicted disease name} and the \textbf{confidence score}, is displayed clearly on the screen.
+
+\begin{figure}[h!]
+    \centering
+    \begin{minipage}{0.3\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{app/select_image.pdf}
+        \caption{UI of image selection}
+        \label{fig:classify_screen}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.3\textwidth}
+        \centering
+        \includegraphics[width=0.8\textwidth]{app/result.pdf}
+        \caption{Classification result (e.g., ``Mango Anthracnose - 94\%'') generated on-device.}
+        \label{fig:result_screen}
+    \end{minipage}
+\end{figure}
+
+\subsection{Cloud-Integrated Advisory System}
+A key feature that adds significant practical value is the \textbf{``Get Advice''} button, which appears alongside the classification result. When tapped, the application uses the \emph{locally generated} prediction (e.g., ``Mango\_Anthracnose'') as a key to query the Firebase Firestore database. The corresponding, pre-stored, actionable treatment and management plan is fetched and displayed in a new screen or an expandable panel. This provides the user with immediate, science-backed recommendations to manage the identified disease, leveraging the cloud for dynamic content while keeping the core diagnosis private and fast on the device.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.3\textwidth]{app/get_advice.pdf}
+    \caption{Advisory section with detailed steps for treatment.}
+    \label{fig:advice_screen}
+\end{figure}
+\newpage
+\section{System Availability and Deployment}
+The ``PlantDoc Advisor'' application is built for widespread availability. The use of Flutter ensures it can be distributed through both the \textbf{Apple App Store} (for iOS devices) and the \textbf{Google Play Store} (for Android devices). A significant advantage of the on-device TFLite model is that the core disease classification feature remains fully functional \textbf{offline}, making it invaluable for use in remote agricultural areas with poor internet connectivity. Users only require an internet connection for the initial login and for fetching disease advice. The hybrid client-server architecture ensures both high performance for the critical AI task and dynamic updates for the advisory content.
+

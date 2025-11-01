@@ -1,0 +1,70 @@
+\chapter{Experimental Setup}
+\section{Hardware Configuration}
+All experiments were conducted using cloud-based GPU resources:
+
+\begin{itemize}
+    \item \textbf{Kaggle:} NVIDIA Tesla T4 GPU with 16 GB VRAM, 29 GB RAM
+    \item \textbf{Google Colab:} NVIDIA Tesla T4 GPU with 16 GB VRAM, 12.7 GB RAM
+    \item \textbf{CPU:} Intel Xeon (provided by Kaggle/Colab backend)
+    \item \textbf{Storage:} Cloud-provided SSD
+    \item \textbf{Operating System:} Linux (Ubuntu 20.04 LTS or equivalent)
+\end{itemize}
+
+This configuration allowed efficient training of CNN models and semi-supervised learning on the mango leaf disease dataset.
+
+\section{Software Configuration}
+The experiments were implemented using Python 3.10--3.11 with the following libraries:
+\begin{itemize}
+    \item TensorFlow 2.x and Keras for model development, training, and evaluation
+    \item NumPy and Pandas for data manipulation
+    \item scikit-learn for preprocessing, evaluation metrics, and dataset splitting
+    \item Matplotlib and Seaborn for visualizations
+    \item OpenCV for image preprocessing
+\end{itemize}
+GPU acceleration was enabled using CUDA 11.x and cuDNN supported in the cloud environments.
+
+\section{Training Configuration}
+\begin{itemize}
+    \item \textbf{Batch size:} 32
+    \item \textbf{Number of epochs:} Up to 100 with early stopping
+    \item \textbf{Optimizer:} Adam
+    \item \textbf{Learning rate scheduling:} ReduceLROnPlateau
+    \item \textbf{Loss function:} Categorical cross-entropy
+    \item \textbf{Data augmentation:} Rotation, flipping, zooming, shearing, brightness adjustment, and Gaussian noise
+\end{itemize}
+
+\section{Evaluation Tools}
+
+To comprehensively assess the performance and behavior of the supervised and semi-supervised learning models, several quantitative and visualization-based evaluation tools were employed.
+
+\subsection{Accuracy}
+Accuracy measures the proportion of correctly classified images among all samples. It provides an overall assessment of model performance:
+\begin{equation}
+\text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}
+\end{equation}
+where $TP$, $TN$, $FP$, and $FN$ represent true positives, true negatives, false positives, and false negatives, respectively.
+
+\subsection{Precision, Recall, and F1-Score}
+\textbf{Precision} indicates the proportion of correctly predicted positive instances among all predicted positives:
+\begin{equation}
+\text{Precision} = \frac{TP}{TP + FP}
+\end{equation}
+\textbf{Recall} (Sensitivity) measures the proportion of correctly predicted positive instances among all actual positives:
+\begin{equation}
+\text{Recall} = \frac{TP}{TP + FN}
+\end{equation}
+\textbf{F1-Score} is the harmonic mean of precision and recall:
+\begin{equation}
+\text{F1-Score} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}
+\end{equation}
+These metrics are particularly useful for evaluating performance across individual disease classes and addressing class imbalance.
+
+\subsection{Confusion Matrix}
+The confusion matrix provides a detailed view of $TP$, $TN$, $FP$, and $FN$ for each class, helping to identify disease categories prone to misclassification.
+
+\subsection{Grad-CAM}
+Grad-CAM (Gradient-weighted Class Activation Mapping) generates heatmaps highlighting the regions of input images that contributed most to the model’s predictions. This tool allows verification that the model focuses on relevant disease spots rather than background, improving interpretability and trust.
+
+\subsection{t-SNE}
+t-SNE (t-Distributed Stochastic Neighbor Embedding) reduces high-dimensional feature embeddings to 2D or 3D space for visualization. It helps observe how well learned features separate different disease classes and provides insight into feature representation quality.
+

@@ -1,0 +1,51 @@
+\chapter{Model Visualization and Interpretation}
+In this chapter, we present visualization techniques used to interpret and analyze the deep learning model. Visualization not only helps in understanding model decisions but also validates the learned features for classification tasks. Two popular techniques, \textbf{Grad-CAM} and \textbf{t-SNE}, were employed.
+
+\section{Grad-CAM: Gradient-weighted Class Activation Mapping}
+Grad-CAM is a technique that provides \textbf{visual explanations} of where the model is focusing in an image to make a particular prediction. It uses the gradients of the target concept flowing into the final convolutional layer to produce a \textbf{coarse localization map} highlighting important regions.
+The Grad-CAM heatmap is computed as follows:
+
+\begin{equation}
+\alpha_k^c = \frac{1}{Z} \sum_i \sum_j \frac{\partial y^c}{\partial A_{ij}^k}
+\end{equation}
+
+\begin{equation}
+L_{\text{Grad-CAM}}^c = \text{ReLU} \left( \sum_k \alpha_k^c A^k \right)
+\end{equation}
+Where:
+\begin{itemize}
+    \item $y^c$ is the score for class $c$
+    \item $A^k$ is the $k^{th}$ feature map of the last convolutional layer
+    \item $\alpha_k^c$ is the weight for feature map $k$
+    \item $Z$ is the number of pixels in the feature map
+    \item ReLU ensures only positive influences are visualized
+\end{itemize}
+Grad-CAM helps in \textbf{interpreting model focus areas}. Figure~\ref{fig:gradcam} shows the Grad-CAM heatmaps for sample images from our dataset \cite{selvaraju2017grad}.
+
+\begin{figure}[h!]
+    \centering
+     \includegraphics[width=1.0\textwidth]{Figure/grad_cam.pdf}
+    \caption{Grad-CAM heatmap visualization.}
+    \label{fig:gradcam}
+\end{figure}
+
+\section{t-SNE: t-Distributed Stochastic Neighbor Embedding}
+t-SNE is a \textbf{dimensionality reduction} technique used to \textbf{visualize high-dimensional data} in 2D or 3D space. It preserves \textbf{local similarities} of data points, allowing us to observe \textbf{clustering patterns} of different classes learned by the model.
+t-SNE computes a probability distribution over pairs of high-dimensional points:
+
+\begin{equation}
+p_{j|i} = \frac{\exp(-\|x_i - x_j\|^2 / 2\sigma_i^2)}{\sum_{k\neq i} \exp(-\|x_i - x_k\|^2 / 2\sigma_i^2)}
+\end{equation}
+Then it defines a similar probability distribution $q_{ij}$ in the low-dimensional space and \textbf{minimizes the Kullback–Leibler divergence} between the two distributions:
+
+\begin{equation}
+\text{KL}(P \| Q) = \sum_i \sum_j p_{ij} \log \frac{p_{ij}}{q_{ij}}
+\end{equation}
+t-SNE visualization allows us to see how well the model separates different classes in the feature space. Figure~\ref{fig:tsne} shows a 2D t-SNE embedding of the model features \cite{maaten2008visualizing}.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=01.0\textwidth]{Figure/Tsne.pdf}
+    \caption{t-SNE feature space visualization.}
+    \label{fig:tsne}
+\end{figure}

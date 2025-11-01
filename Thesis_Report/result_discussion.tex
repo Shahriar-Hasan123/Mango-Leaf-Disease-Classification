@@ -1,0 +1,215 @@
+\chapter{Result \& Discussion}
+
+\section{Comparative Accuracy Analysis of Models}
+Table~\ref{tab:accuracy_comparison} presents the validation and test accuracies for all pretrained models and the proposed model under both supervised and semi-supervised learning settings.
+\begin{table}[htbp]
+\centering
+\small
+\rowcolors{2}{gray!15}{white}
+\begin{tabular}{l c c c}
+\hline
+\textbf{Model} & \textbf{Learning Type} & \textbf{Validation Accuracy} & \textbf{Test Accuracy} \\
+\hline
+VGG16 & Supervised & 0.9875 & 0.9850 \\
+VGG16 & Semi-Supervised & 0.8950 & 0.8775 \\
+MobileNetV2 & Supervised & 0.9100 & 0.9125 \\
+MobileNetV2 & Semi-Supervised & 0.9750 & 0.9850 \\
+DenseNet121 & Supervised & 0.9575 & 0.9450 \\
+DenseNet121 & Semi-Supervised & 0.9875 & 0.9700 \\
+ResNet101 & Supervised & 0.9975 & 0.9800 \\
+ResNet101 & Semi-Supervised & 0.3600 & 0.3500 \\
+Proposed Model & Supervised & 0.9900 & 0.9875 \\
+Proposed Model & Semi-Supervised & 0.9075 & 0.9275 \\
+\hline
+\end{tabular}
+\caption{Validation and Test Accuracy Comparison}
+\label{tab:accuracy_comparison}
+\end{table}
+The results show that several models benefit from semi-supervised learning, such as MobileNetV2 and DenseNet121, which achieved higher validation and test accuracies. The proposed model also performed strongly in both settings. However, ResNet101 training under semi-supervised learning did not converge well, leading to a significant drop in accuracy. These findings indicate that training stability and architectural design play crucial roles when unlabeled data is introduced.
+
+\section{Classification Performance Analysis}
+To evaluate predictive reliability, precision, recall, and F1-score were measured for each model. These metrics provide additional insight into class-level performance beyond accuracy.
+\begin{table}[htbp]
+\centering
+\small
+\rowcolors{2}{gray!15}{white}
+\begin{tabular}{l c c c c}
+\hline
+\textbf{Model} & \textbf{Learning Type} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-Score} \\
+\hline
+VGG16 & Supervised & 0.99 & 0.98 & 0.98 \\
+VGG16 & Semi-Supervised & 0.88 & 0.88 & 0.87 \\
+MobileNetV2 & Supervised & 0.91 & 0.91 & 0.91 \\
+MobileNetV2 & Semi-Supervised & 0.98 & 0.98 & 0.98 \\
+DenseNet121 & Supervised & 0.95 & 0.95 & 0.94 \\
+DenseNet121 & Semi-Supervised & 0.97 & 0.97 & 0.97 \\
+ResNet101 & Supervised & 0.98 & 0.98 & 0.98 \\
+ResNet101 & Semi-Supervised & 0.31 & 0.35 & 0.27 \\
+Proposed Model & Supervised & 0.99 & 0.99 & 0.99 \\
+Proposed Model & Semi-Supervised & 0.93 & 0.93 & 0.93 \\
+\hline
+\end{tabular}
+\caption{Precision, Recall, and F1-Score Comparison}
+\label{tab:metric_comparison}
+\end{table}
+Overall, the supervised proposed model, supervised ResNet101, and supervised VGG16 delivered strong classification performance. Semi-supervised MobileNetV2 also achieved promising results, confirming that additional unlabeled data can enhance generalisation. However, the degraded performance of semi-supervised ResNet101 again reflects unstable training behaviour.
+
+\section{Performance Curves}
+\subsection{Supervised Pretrained Model Performance Curves}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=1.0\textwidth]{Figure/vgg.pdf} 
+    \caption{VGG16 model accuracy and loss curves during supervised learning}
+    \label{fig:vgg_sup} 
+\end{figure}
+
+\begin{figure}[htbp]  
+    \centering
+    \includegraphics[width=1.0\textwidth]{Figure/mobile.pdf}
+    \caption{MobileNetV2 model accuracy and loss curves during supervised learning}
+    \label{fig:mobile_sup}
+\end{figure}
+
+\begin{figure}[htbp]  
+    \centering
+    \includegraphics[width=1.0\textwidth]{Figure/resNet.pdf}
+    \caption{ResNet101 model accuracy and loss curves during supervised learning}
+    \label{fig:resnet_sup}
+\end{figure}
+
+\newpage
+\subsection{Semi-supervised Pretrained Model Performance Curves}
+\begin{figure}[htbp]  
+    \centering
+    \includegraphics[width=1.0\textwidth]{Figure/semi_vgg.pdf}
+    \caption{VGG16 model accuracy and loss curves during semi-supervised learning}
+    \label{fig:vgg_semi}
+\end{figure}
+
+\begin{figure}[htbp]  
+    \centering
+    \includegraphics[width=1.0\textwidth]{Figure/semi_mobile.pdf}
+    \caption{MobileNetV2 model accuracy and loss curves during semi-supervised learning}
+    \label{fig:mobile_semi}
+\end{figure}
+
+\begin{figure}[htbp]  
+    \centering
+    \includegraphics[width=1.0\textwidth]{Figure/semi_res.pdf}
+    \caption{ResNet101 model accuracy and loss curves during semi-supervised learning}
+    \label{fig:resnet_semi}
+\end{figure}
+
+\begin{figure}[htbp]  
+    \centering
+    \includegraphics[width=1.0\textwidth]{Figure/semi_dense.pdf}
+    \caption{DenseNet121 model accuracy and loss curves during semi-supervised learning}
+    \label{fig:dense_semi}
+\end{figure}
+
+\newpage
+\subsection{Proposed Model Performance Curves}
+\begin{figure}[htbp]  
+    \centering
+    \includegraphics[width=1.0\textwidth]{Figure/proposed.pdf}
+    \caption{Supervised proposed model accuracy and loss curves}
+    \label{fig:prop_sup}
+\end{figure}
+
+\begin{figure}[htbp]  
+    \centering
+    \includegraphics[width=1.0\textwidth]{Figure/semi_proposed.pdf}
+    \caption{Semi-supervised proposed model accuracy and loss curves}
+    \label{fig:prop_semi}
+\end{figure}
+
+\section{Confusion Matrix Analysis}
+\subsection{Supervised Pretrained Model Confusion Matrix}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.6\textwidth]{Figure/vgg_conf.pdf} 
+    \caption{Confusion matrix of Vgg16}
+    \label{fig:vgg_sup_con} 
+\end{figure}
+
+\begin{figure}[htbp]  
+    \centering
+    \includegraphics[width=0.6\textwidth]{Figure/mobile_conf.pdf}
+    \caption{Confusion matrix of MobileNetV2}
+    \label{fig:mobile_sup_con}
+\end{figure}
+
+\begin{figure}[htbp]  
+    \centering
+    \includegraphics[width=0.6\textwidth]{Figure/resNet_conf.pdf}
+    \caption{Confusion matrix of ResNet101}
+    \label{fig:resnet_sup_con}
+\end{figure}
+
+\begin{figure}[htbp]  
+    \centering
+    \includegraphics[width=0.6\textwidth]{Figure/dense_conf.pdf}
+    \caption{Confusion matrix of DenseNet121}
+    \label{fig:densenet_sup_con}
+\end{figure}
+
+\newpage
+\subsection{Semi-supervised Pretrained Model Confusion Matrix}
+\begin{figure}[htbp]  
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figure/semi_vgg_conf.pdf}
+    \caption{Confusion matrix of VGG16}
+    \label{fig:vgg_semi_con}
+\end{figure}
+
+\begin{figure}[htbp]  
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figure/semi_mobile_conf.pdf}
+    \caption{Confusion matrix of MobileNetV2}
+    \label{fig:mobile_semi_con}
+\end{figure}
+
+\begin{figure}[htbp]  
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figure/semi_res_conf.pdf}
+    \caption{Confusion matrix of ResNet101}
+    \label{fig:resnet_semi_con}
+\end{figure}
+
+\begin{figure}[htbp]  
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figure/semi_dense_conf.pdf}
+    \caption{Confusion matrix of DenseNet121}
+    \label{fig:dense_semi_con}
+\end{figure}
+
+\newpage
+\subsection{Proposed Model Confusion Matrix}
+\begin{figure}[htbp]  
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figure/proposed_conf.pdf}
+    \caption{Confusion matrix of the supervised proposed model}
+    \label{fig:prop_sup_con}
+\end{figure}
+
+\begin{figure}[htbp]  
+    \centering
+    \includegraphics[width=0.8\textwidth]{Figure/semi_proposed_conf.pdf}
+    \caption{Confusion matrix of the semi-supervised proposed model}
+    \label{fig:prop_semi_con}
+\end{figure}
+\newpage
+\section{Discussion}
+
+This study examined supervised and semi-supervised learning for mango leaf disease classification across five deep learning architectures. The results demonstrate that model performance strongly depends on both the learning strategy and architectural design.\\
+
+\noindent
+In the supervised experiments, all models achieved high test accuracy, showing that when a fully labeled dataset is available, deep CNNs are reliable for disease recognition. ResNet101 achieved the best performance with \textbf{99.75\%} test accuracy, confirming its ability to learn highly discriminative features through residual connections. The proposed model followed closely with \textbf{99.00\%} test accuracy, while also keeping computational complexity lower than very deep networks. VGG16 performed well with \textbf{98.75\%} test accuracy, although its lack of batch normalization and higher parameter count make it less efficient. DenseNet121 produced \textbf{95.75\%} test accuracy, showing strong generalization through dense feature reuse. MobileNetV2 provided \textbf{91.00\%} test accuracy, which is expected given its lightweight structure, yet it remained a viable solution where computation is limited.\\
+
+\noindent
+Semi-supervised learning led to both improvements and failures depending on network characteristics. MobileNetV2 showed the most notable gain, increasing its test accuracy from \textbf{91.00\%} to \textbf{97.50\%}, demonstrating that architectures with built-in regularization can effectively leverage unlabeled data. DenseNet121 also improved, rising from \textbf{95.75\%} to \textbf{98.75\%} test accuracy, suggesting that dense connectivity helps reduce the negative influence of noisy pseudo-labels. The proposed model maintained strong performance with \textbf{90.75\%} test accuracy, indicating that it remains stable even when trained with fewer labels.\\
+In contrast, VGG16 experienced a noticeable decline in semi-supervised mode. Its test accuracy dropped to \textbf{89.50\%}, which signals difficulty handling pseudo-label noise due to its older architectural design. The most dramatic performance reduction occurred in ResNet101, where test accuracy fell sharply to only \textbf{36.00\%}. Because of the depth of the network, incorrect pseudo-labels were repeatedly amplified through residual blocks, causing early model divergence and poor feature representation. These results highlight that greater depth does not automatically translate to better outcomes when unlabeled data introduce uncertainty.\\
+
+\noindent
+Overall, the findings reveal that supervised learning remains the most dependable when complete labeled datasets are available. However, semi-supervised learning can significantly reduce labeling requirements, making automated leaf disease diagnosis more practical in real agriculture environments where expert annotation is costly. Architectures that incorporate strong regularization and efficient feature propagation, such as DenseNet121, MobileNetV2, and the proposed model, are the most resilient to unlabeled data noise.\\
+The proposed model is the most balanced solution for real-world deployment. It achieves nearly the highest supervised test accuracy with \textbf{99.00\%}, remains robust in semi-supervised learning with \textbf{90.75\%} test accuracy, and requires fewer parameters and computing resources compared to deeper models. These advantages make the proposed model better suited for mobile and edge-based agricultural systems where efficiency, speed, and reliability are essential.

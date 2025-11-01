@@ -1,0 +1,44 @@
+\begin{figure}[htbp!]
+\centering
+\begin{tikzpicture}[font=\sffamily\small
+, every node/.style={align=center},
+    layer/.style={rectangle, rounded corners=4pt, draw=black!40, fill=#1!18, minimum width=2.8cm, minimum height=7mm, inner sep=3pt, drop shadow={shadow xshift=0.5pt, shadow yshift=-0.5pt}},
+    smalllayer/.style={rectangle, rounded corners=4pt, draw=black!30, fill=#1!10, minimum width=2.4cm, minimum height=6mm, inner sep=2pt},
+    arrow/.style={->, thick, rounded corners=2pt, >=stealth}
+]
+
+% Input
+\node (input) [smalllayer={blockgray}] {Input\\(\tiny \texttt{\small 224x224x3})};
+
+% Block 1
+\node (b1) [layer={blockblue}, below=5mm of input] {Conv2D(32,3x3)\\BatchNorm\\ReLU\\MaxPool(2x2)\\Dropout(0.2)};
+
+% Block 2
+\node (b2) [layer={blockgreen}, below=4mm of b1] {Conv2D(64,3x3)\\BatchNorm\\ReLU\\MaxPool(2x2)\\Dropout(0.3)};
+
+% Block 3
+\node (b3) [layer={blockorange}, below=4mm of b2] {Conv2D(128,3x3)\\BatchNorm\\ReLU\\MaxPool(2x2)\\Dropout(0.4)};
+
+% Block 4
+\node (b4) [layer={blockblue}, below=4mm of b3] {Conv2D(256,3x3)\\BatchNorm\\ReLU\\MaxPool(2x2)\\Dropout(0.5)};
+
+% Global Pooling & Head
+\node (gap) [smalllayer={blockgray}, below=4mm of b4] {GlobalAveragePooling2D};
+\node (d1) [smalllayer={blockgreen}, below=4mm of gap] {Dense(256)\\ReLU\\Dropout(0.6)};
+\node (d2) [smalllayer={blockorange}, below=4mm of d1] {Dense(128)\\ReLU\\Dropout(0.5)};
+\node (out) [smalllayer={blockblue}, below=4mm of d2] {\\Output Dense(8, Softmax)\\};
+
+% Connections
+\draw[arrow] (input) -- (b1);
+\draw[arrow] (b1) -- (b2);
+\draw[arrow] (b2) -- (b3);
+\draw[arrow] (b3) -- (b4);
+\draw[arrow] (b4) -- (gap);
+\draw[arrow] (gap) -- (d1);
+\draw[arrow] (d1) -- (d2);
+\draw[arrow] (d2) -- (out);
+
+\end{tikzpicture}
+\caption{Proposed CNN architecture for mango leaf disease classification.}
+\label{fig:cnn_architecture}
+\end{figure}

@@ -1,0 +1,31 @@
+\chapter{Conclusion, Limitations, and Future Work}
+
+\section{Conclusion}
+This work compared supervised and semi-supervised learning for mango leaf disease classification using VGG16, MobileNetV2, DenseNet121, ResNet101, and a proposed lightweight model. The results show that supervised learning delivers consistently high performance when labeled data are sufficient, with ResNet101 and the proposed model achieving the highest accuracy. Semi-supervised learning produced mixed outcomes. DenseNet121 and MobileNetV2 benefited from unlabeled data and showed improved test accuracy, while VGG16 and ResNet101 struggled with noisy pseudo-labels, leading to reduced performance.
+
+These findings indicate that semi-supervised learning can reduce annotation requirements and still achieve strong accuracy, but only when paired with models that are robust to uncertainty. The proposed model demonstrated the best overall balance between accuracy, stability, and computational efficiency, making it well-suited for real-world agricultural deployment where hardware resources and expert labeling are limited.
+\section{Limitations}
+Despite the promising results, this study faced several limitations that may impact the generalizability of the findings:  
+
+\begin{itemize}
+    \item \textbf{Data imbalance:} Some disease classes had significantly fewer samples than others. This imbalance may have influenced the learning process, making the models biased towards classes with more images. Future models should account for this imbalance, potentially using data augmentation or class-weighted loss functions.  
+
+    \item \textbf{Duplicate and highly similar images:} The dataset contained multiple near-duplicate images for some classes, which may have led to overfitting or inflated performance metrics. While measures were taken to split unique images into training and duplicate images into validation/test sets, duplicate data still poses challenges for truly assessing generalization.  
+
+    \item \textbf{Data collection challenges:} Collecting high-quality leaf images from diverse conditions, seasons, and locations was difficult. Limited environmental and phenotypic diversity in the dataset may have constrained the models’ ability to generalize to unseen data.  
+
+    \item \textbf{Time constraints:} Limited time prevented extensive experimentation, hyperparameter tuning, and testing of additional architectures. A longer timeframe would allow deeper exploration of semi-supervised strategies, different pseudo-labeling techniques, and ensemble methods to further improve performance.  
+
+    \item \textbf{Hardware limitations:} Due to limited GPU availability in the computer lab, we were unable to run large-scale experiments locally. We relied on limited GPU resources on Kaggle and Google Colab, which constrained batch sizes, model training time, and the number of experiments that could be performed.  
+\end{itemize}
+
+\section{Future Work}
+Based on the findings and limitations, the following directions are recommended for future research:  
+
+\begin{itemize}
+    \item \textbf{Enhanced dataset collection:} Increase the number of images across all disease categories, including more diverse samples from different environmental conditions, seasons, and mango varieties. Measures should be taken to minimize duplicate or highly similar images to improve model generalization.  
+
+    \item \textbf{Model selection and optimization:} Explore a wider range of architectures and fine-tune hyperparameters and regularization strategies. Investigate ensemble or hybrid architectures to further enhance robustness in semi-supervised learning.  
+
+    \item \textbf{Continued research in mango leaf disease classification:} Explore advanced semi-supervised and self-supervised learning approaches, integrate spectral or multispectral imaging, and focus on deploying models in real-field agricultural settings. These directions can help develop reliable and scalable solutions for automated disease detection and management in mango cultivation.
+\end{itemize}
